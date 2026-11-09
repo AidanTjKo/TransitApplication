@@ -16,6 +16,32 @@ namespace TransitApplication.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "10.0.14");
 
+            modelBuilder.Entity("TransitApplication.Models.BusStop", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("Latitude")
+                        .HasColumnType("REAL");
+
+                    b.Property<double>("Longitude")
+                        .HasColumnType("REAL");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("TransitRouteId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TransitRouteId");
+
+                    b.ToTable("BusStops");
+                });
+
             modelBuilder.Entity("TransitApplication.Models.TransitRoute", b =>
                 {
                     b.Property<int>("Id")
@@ -35,6 +61,22 @@ namespace TransitApplication.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TransitRoutes");
+                });
+
+            modelBuilder.Entity("TransitApplication.Models.BusStop", b =>
+                {
+                    b.HasOne("TransitApplication.Models.TransitRoute", "TransitRoute")
+                        .WithMany("BusStops")
+                        .HasForeignKey("TransitRouteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TransitRoute");
+                });
+
+            modelBuilder.Entity("TransitApplication.Models.TransitRoute", b =>
+                {
+                    b.Navigation("BusStops");
                 });
 #pragma warning restore 612, 618
         }

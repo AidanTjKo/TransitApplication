@@ -3,7 +3,7 @@ using Microsoft.VisualBasic;
 using SQLitePCL;
 using TransitApplication.Models;
 using TransitApplication.Data;
-
+using TransitApplication.Services;
 
 namespace TransitApplication.Controllers
 {
@@ -114,6 +114,48 @@ namespace TransitApplication.Controllers
             return RedirectToAction("Browse");
         }
 
+        
+        [HttpGet]
+        public IActionResult Stops(int id)
+        {
+            var stops = _context.BusStops
+                .Where(stop=> stop.TransitRouteId == id)
+                .OrderBy(stop => stop.Id)
+                .ToList();
+
+            if (stops.Count < 2)
+            {
+                return BadRequest("At least two stops are required.");
+            }
+
+            double distance = GeoCalculator.CalculateDistance(stops[0],stops[1]);
+
+            Console.WriteLine($"Distance between Stop 1 and Stop 2 is {distance:F3} km");
+            return Json(stops);
+        }
+
+
+        [HttpGet]
+        public IActionResult Distance(int stop1Id, int Stop2Id)
+        {
+            var stop1 = _context.BusStops.Find(stop1Id);
+            var stop2 = _context.BusStops.Find(Stop2Id);
+
+            if (stop1 ==null || stop2 == null)
+            {
+                return NotFound("One or both bus stops were not found.");
+            }
+
+
+            double distance = GeoCalculator.CalculateDistance(stop1, stop2);
+            return Json(new
+            {
+                stop1Id = stop1.Id,
+                stop2Id = stop2.Id,
+                distanceKm = distance
+
+            });
+        }
 
     }
 }
