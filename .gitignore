@@ -1,0 +1,13 @@
+bin/
+obj/
+.vs/
+.DS_Store
+
+# Local SQLite database
+*.db
+*.db-shm
+*.db-wal
+
+# Local secrets
+.env
+*.user
