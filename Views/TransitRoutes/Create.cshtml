@@ -1,0 +1,24 @@
+@model TransitApplication.Models.TransitRoute
+
+
+<h1>Create Transit Route</h1>
+
+<form asp-action = "Create" method = "post">
+    <div>
+        <label asp-for="RouteNumber"></label>
+        <input asp-for="RouteNumber" type="number"/>
+        <span asp-validation-for="RouteNumber"></span>
+    </div>
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" type="text"/>
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div>
+        <label asp-for="IsActive"></label>
+        <input asp-for="IsActive" type="checkbox" />
+        <span asp-validation-for="IsActive"></span>
+    </div>
+
+    <button type="submit">Create Route</button>
+</form>

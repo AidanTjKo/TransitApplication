@@ -1,0 +1,25 @@
+@model IEnumerable<TransitApplication.Models.TransitRoute>
+
+
+<h1>Transit Routes</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Route Number</th>
+            <th>Name</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach(var route in Model)
+        {
+            <tr>
+                <td>@route.RouteNumber</td>
+                <td>@route.Name</td>
+                <td>@(route.IsActive ? "Active" : "Inactive")</td>
+            </tr>
+        }
+    </tbody>
+</table>

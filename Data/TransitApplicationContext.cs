@@ -11,5 +11,6 @@ namespace TransitApplication.Data
         }
 
         public DbSet<TransitRoute> TransitRoutes {get; set;} = null!;
+        public DbSet<BusStop> BusStops {get;set;} = null!;
     }
 }
